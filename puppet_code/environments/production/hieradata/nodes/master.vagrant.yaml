@@ -1,0 +1,28 @@
+---
+classes:
+  - puppetdb
+  - puppetdb::master::config
+  - puppetexplorer
+puppetdb::listen_address: '0.0.0.0'
+puppetdb::master::config::manage_report_processor: true
+puppetdb::master::config::enable_reports: true
+#puppetdb::open_ssl_listen_port: false
+#puppetdb::open_postgres_port: false
+firewall_rules:
+  '000 allow puppet':
+    dport:
+      - 8140
+    proto: tcp
+    action: accept
+  '000 allow puppetdb':
+    dport:
+      - 8080
+      - 8081
+    proto: tcp
+    action: accept
+  '000 allow puppetexplorer':
+    dport:
+      - 80
+      - 443
+    proto: tcp
+    action: accept

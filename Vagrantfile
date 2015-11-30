@@ -12,15 +12,19 @@ Vagrant.configure(2) do |config|
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
       systemctl stop firewalld; iptables -F 
      
+      #Setup Puppetserver A little bit more (would typically come from a control-repo
+      sudo ln -svf /vagrant/puppet_code/hiera.yaml /etc/puppetlabs/code/hiera.yaml     
+      sudo ln -svf /vagrant/autosign.conf /etc/puppetlabs/puppet/autosign.conf
+      sudo ln -svf /vagrant/puppet_code/environments/production/environment.conf /etc/puppetlabs/code/environments/production/environment.conf
+      sudo ln -svf /vagrant/puppet_code/environments/production/site.pp  /etc/puppetlabs/code/environments/production/site.pp
+      sudo ln -svFf /vagrant/puppet_code/environments/production/site  /etc/puppetlabs/code/environments/production/
+      sudo ln -svFf /vagrant/puppet_code/environments/production/dist /etc/puppetlabs/code/environments/production/
+      sudo ln -svFf /vagrant/puppet_code/environments/production/hieradata/nodes /etc/puppetlabs/code/environments/production/hieradata/
+      sudo ln -sf /vagrant/puppet_code/environments/production/hieradata/common.yaml /etc/puppetlabs/code/environments/production/hieradata/common.yaml
+
       #Pull in puppet modules to bootstrap/use
       cd /vagrant;sudo PATH=$PATH:/opt/puppetlabs/bin/ /usr/local/bin/librarian-puppet install --verbose --path=/etc/puppetlabs/code/environments/production/modules/
-      #Setup Puppetserver A little bit more (would typically come from a control-repo
-      cp -f /vagrant/autosign.conf /etc/puppetlabs/puppet/autosign.conf
-      cp -f /vagrant/environment.conf /etc/puppetlabs/code/environments/production/
-      cp -Rf /vagrant/site  /etc/puppetlabs/code/environments/production/
-      cp -Rf /vagrant/hieradata /etc/puppetlabs/code/environments/production/
-      cp -f /vagrant/hiera.yaml /etc/puppetlabs/code/hiera.yaml
-      cp -f /vagrant/site.pp  /etc/puppetlabs/code/environments/production/
+      
       #Local Puppet Apply to bootstrap puppetserver
       sudo /opt/puppetlabs/bin/puppet apply --modulepath=/etc/puppetlabs/code/environments/production/modules/ master.pp
       

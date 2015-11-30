@@ -9,5 +9,5 @@ class profile::base {
 
   #All hosts collect the hostkeys
   Sshkey <<| |>>
-
+  
 }
