@@ -1,4 +1,7 @@
 ---
 classes:
   - profile::base  
+  - ospuppet::agent
+ospuppet::agent::server: 'master.vagrant'
+ospuppet::agent::runinterval: '5m'
 
