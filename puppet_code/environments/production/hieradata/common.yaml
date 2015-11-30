@@ -1,7 +1,11 @@
 ---
 classes:
   - profile::base
-  - firewall  
+  - firewall
   - ospuppet::agent
 ospuppet::agent::server: 'master.vagrant'
 ospuppet::agent::runinterval: '5m'
+ospuppet::agent::custom_settings:
+  agent_splay:
+    setting: 'splay'
+    value: 'true'
