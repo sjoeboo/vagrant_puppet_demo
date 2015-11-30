@@ -1,4 +1,9 @@
 forge "https://forgeapi.puppetlabs.com"
 
 mod 'juame-ospuppet'
-#mod 'proletaryo-supervisor', '0.5.3'
+
+mod "puppetlabs/puppetdb"
+mod "puppetlabs/apache"
+mod "puppetlabs/vcsrepo"
+
+mod "spotify/puppetexplorer"
