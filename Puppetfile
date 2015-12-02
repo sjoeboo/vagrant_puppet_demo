@@ -7,3 +7,5 @@ mod "puppetlabs/apache"
 mod "puppetlabs/vcsrepo"
 
 mod "spotify/puppetexplorer"
+
+mod "theforeman/foreman"

@@ -1,5 +1,5 @@
 Vagrant.configure(2) do |config|
-  #"Master" System 
+  #"Master" System
   config.vm.define "master" do |master|
     master.vm.box = "sjoeboo/centos-7-1-x86-PC1"
     master.vm.provider "virtualbox" do |v|
@@ -8,12 +8,12 @@ Vagrant.configure(2) do |config|
     end
     master.vm.network "private_network", ip: "192.168.20.5"
     master.vm.provision "shell", inline: <<-SHELL
-      hostname master.vagrant 
+      hostname master.vagrant
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
-      systemctl stop firewalld; iptables -F 
-     
+      systemctl stop firewalld; iptables -F
+
       #Setup Puppetserver A little bit more (would typically come from a control-repo
-      sudo ln -svf /vagrant/puppet_code/hiera.yaml /etc/puppetlabs/code/hiera.yaml     
+      sudo ln -svf /vagrant/puppet_code/hiera.yaml /etc/puppetlabs/code/hiera.yaml
       sudo ln -svf /vagrant/autosign.conf /etc/puppetlabs/puppet/autosign.conf
       sudo ln -svf /vagrant/puppet_code/environments/production/environment.conf /etc/puppetlabs/code/environments/production/environment.conf
       sudo ln -svf /vagrant/puppet_code/environments/production/site.pp  /etc/puppetlabs/code/environments/production/site.pp
@@ -24,15 +24,28 @@ Vagrant.configure(2) do |config|
 
       #Pull in puppet modules to bootstrap/use
       cd /vagrant;sudo PATH=$PATH:/opt/puppetlabs/bin/ /usr/local/bin/librarian-puppet install --verbose --path=/etc/puppetlabs/code/environments/production/modules/
-      
+
       #Local Puppet Apply to bootstrap puppetserver
       sudo /opt/puppetlabs/bin/puppet apply --modulepath=/etc/puppetlabs/code/environments/production/modules/ master.pp
-      
+
       #Now that we have a server up, we can run as an agent to do the rest!
-      sudo /opt/puppetlabs/bin/puppet agent --test --server=master.vagrant;true 
+      sudo /opt/puppetlabs/bin/puppet agent --test --server=master.vagrant;true
     SHELL
   end
-
+  config.vm.define "foreman" do |foreman|
+    foreman.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    foreman.vm.network "private_network", ip: "192.168.20.10"
+    foreman.vm.provision "shell", inline: <<-SHELL
+      echo "192.168.20.5  master.vagrant master" >> /etc/hosts
+      hostname foreman.vagrant
+      echo "192.168.20.10 foreman.vagrant foreman" >>/etc/hosts
+      sudo yum -y remove puppet
+      sudo rm -rf /etc/yum.repos.d/puppet*
+      sudo yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+      sudo yum -y install puppet 
+      sudo puppet agent --test --server=master.vagrant;true
+    SHELL
+  end
   #Slave01 System
   config.vm.define "slave01" do |slave01|
     slave01.vm.box = "sjoeboo/centos-7-1-x86-PC1"

@@ -1,0 +1,18 @@
+---
+classes:
+  - foreman
+ospuppet::agent::package_name: 'puppet'
+ospuppet::puppet_confdir: '/etc/puppet'
+firewall_rules:
+  '000 allow foreman':
+    dport:
+      - 80
+      - 443
+      - 8443
+    proto: tcp
+    action: accept
+foreman::passenger_ruby: '/usr/bin/ruby193-ruby'
+foreman::passenger_ruby_package: 'ruby193-rubygem-passenger-native'
+foreman::admin_username: 'admin'
+foreman::admin_password: 'foreman'
+foreman::plugin_prefix: 'ruby193-rubygem-foreman_'
