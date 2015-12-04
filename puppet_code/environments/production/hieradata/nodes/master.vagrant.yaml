@@ -1,13 +1,25 @@
 ---
 classes:
+  - ospuppet::server
+  - ospuppet::master
   - puppetdb
   - puppetdb::master::config
   - puppetexplorer
+  - foreman_extras
 puppetdb::listen_address: '0.0.0.0'
-puppetdb::master::config::manage_report_processor: true
-puppetdb::master::config::enable_reports: true
-#puppetdb::open_ssl_listen_port: false
-#puppetdb::open_postgres_port: false
+#puppetdb::master::config::manage_report_processor: true
+#puppetdb::master::config::enable_reports: true
+ospuppet::master::custom_settings:
+  master_reports:
+    setting: 'reports'
+    value: 'puppetdb,foreman'
+ospuppet::master::hiera_backends:
+  - yaml
+ospuppet::master::hiera_hierarchy:
+  - 'nodes/%{literal("%")}{::fqdn}'
+  - 'nodes/%{literal("%")}{::hostname}'
+  - 'nodes/%{literal("%")}{::hostname_base}'
+  - 'common'
 firewall_rules:
   '000 allow puppet':
     dport:
@@ -26,3 +38,10 @@ firewall_rules:
       - 443
     proto: tcp
     action: accept
+files:
+  'foreman-report_v2.rb':
+    path:
+    source: 'puppet:///modules/foreman/foreman-report_v2.rb'
+    mode: '0755'
+    owner: 'puppet'
+    group: 'puppet'
