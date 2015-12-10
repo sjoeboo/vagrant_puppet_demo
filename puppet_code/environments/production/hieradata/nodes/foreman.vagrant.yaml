@@ -1,6 +1,9 @@
 ---
 classes:
   - foreman
+  - foreman::plugin::discovery
+  - foreman_proxy
+  - foreman::cli
 ospuppet::agent::package_name: 'puppet'
 ospuppet::puppet_confdir: '/etc/puppet'
 firewall_rules:
@@ -11,8 +14,21 @@ firewall_rules:
       - 8443
     proto: tcp
     action: accept
+  '000 allow all':
+    proto: all
+    iniface: enp0s9
+    action: accept
 foreman::passenger_ruby: '/usr/bin/ruby193-ruby'
 foreman::passenger_ruby_package: 'ruby193-rubygem-passenger-native'
 foreman::admin_username: 'admin'
 foreman::admin_password: 'foreman'
 foreman::plugin_prefix: 'ruby193-rubygem-foreman_'
+foreman_proxy::puppetca: false
+foreman_proxy::puppetrun: false
+foreman_proxy::dhcp: true
+foreman_proxy::dns: true
+foreman_proxy::dhcp_interface: 'enp0s8'
+foreman_proxy::dhcp_range: '192.168.20.50 192.168.20.100'
+foreman_proxy::dns_interface: 'enp0s8'
+foreman::cli::forman_url: 'https://forman.vagrant'
+foreman::cli::manage_root_config: true

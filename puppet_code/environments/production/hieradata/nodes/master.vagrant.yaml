@@ -38,10 +38,4 @@ firewall_rules:
       - 443
     proto: tcp
     action: accept
-files:
-  'foreman-report_v2.rb':
-    path:
-    source: 'puppet:///modules/foreman/foreman-report_v2.rb'
-    mode: '0755'
-    owner: 'puppet'
-    group: 'puppet'
+foreman_extras::foreman_url: 'https://foreman.vagrant'

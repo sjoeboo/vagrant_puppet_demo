@@ -65,5 +65,9 @@ Vagrant.configure(2) do |config|
       hostname slave02.vagrant
     SHELL
   end
+  config.vm.define "slave03" do |slave03|
+    slave03.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    slave03.vm.network "private_network", ip: "192.168.20.8"
+  end 
 
 end
