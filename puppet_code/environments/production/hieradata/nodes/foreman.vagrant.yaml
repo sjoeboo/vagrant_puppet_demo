@@ -27,8 +27,13 @@ foreman_proxy::puppetca: false
 foreman_proxy::puppetrun: false
 foreman_proxy::dhcp: true
 foreman_proxy::dns: true
+foreman_proxy::dns_zone: vagrant
+foreman_proxy::dns_reverse: '20.168.192.in-addr.arpa'
+foreman_proxy::dns_server: 127.0.0.1
 foreman_proxy::dhcp_interface: 'enp0s8'
 foreman_proxy::dhcp_range: '192.168.20.50 192.168.20.100'
 foreman_proxy::dns_interface: 'enp0s8'
+dns::listen_on_v6: none
+foreman::plugin::discovery::install_images: true
 foreman::cli::forman_url: 'https://forman.vagrant'
 foreman::cli::manage_root_config: true

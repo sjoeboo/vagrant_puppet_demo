@@ -34,6 +34,10 @@ Vagrant.configure(2) do |config|
   end
   config.vm.define "foreman" do |foreman|
     foreman.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    foreman.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
     foreman.vm.network "private_network", ip: "192.168.20.10"
     foreman.vm.provision "shell", inline: <<-SHELL
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
@@ -42,13 +46,17 @@ Vagrant.configure(2) do |config|
       sudo yum -y remove puppet
       sudo rm -rf /etc/yum.repos.d/puppet*
       sudo yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-      sudo yum -y install puppet 
+      sudo yum -y install puppet
       sudo puppet agent --test --server=master.vagrant;true
     SHELL
   end
   #Slave01 System
   config.vm.define "slave01" do |slave01|
     slave01.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    slave01.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
     slave01.vm.network "private_network", ip: "192.168.20.6"
     slave01.vm.provision "shell", inline: <<-SHELL
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
@@ -59,6 +67,10 @@ Vagrant.configure(2) do |config|
   #Slave02 System
   config.vm.define "slave02" do |slave02|
     slave02.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    slave02.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
     slave02.vm.network "private_network", ip: "192.168.20.7"
     slave02.vm.provision "shell", inline: <<-SHELL
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
@@ -67,7 +79,11 @@ Vagrant.configure(2) do |config|
   end
   config.vm.define "slave03" do |slave03|
     slave03.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    slave03.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
     slave03.vm.network "private_network", ip: "192.168.20.8"
-  end 
+  end
 
 end
