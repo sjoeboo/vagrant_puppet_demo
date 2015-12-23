@@ -50,15 +50,15 @@ Vagrant.configure(2) do |config|
       sudo puppet agent --test --server=master.vagrant;true
     SHELL
   end
-  #Slave01 System
-  config.vm.define "slave01" do |slave01|
-    slave01.vm.box = "sjoeboo/centos-7-1-x86-PC1"
-    slave01.vm.provider "virtualbox" do |v|
+  #Sense System
+  config.vm.define "sensu" do |sensu|
+    sensu.vm.box = "sjoeboo/centos-7-1-x86-PC1"
+    sensu.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
     end
-    slave01.vm.network "private_network", ip: "192.168.20.6"
-    slave01.vm.provision "shell", inline: <<-SHELL
+    sensu.vm.network "private_network", ip: "192.168.20.6"
+    sensu.vm.provision "shell", inline: <<-SHELL
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
       hostname slave01.vagrant
       sudo /opt/puppetlabs/bin/puppet agent --test --server=master.vagrant;true

@@ -3,9 +3,16 @@ classes:
   - profile::base
   - firewall
   - ospuppet::agent
+  - resolv_conf
 ospuppet::agent::server: 'master.vagrant'
 ospuppet::agent::runinterval: '5m'
 ospuppet::agent::custom_settings:
   agent_splay:
     setting: 'splay'
     value: 'true'
+resolv_conf::nameservers:
+  - 192.168.20.10
+  - 8.8.8.8
+  - 8.8.4.4
+resolv_conf::searchpath:
+  - vagrant

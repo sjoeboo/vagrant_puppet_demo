@@ -11,6 +11,8 @@ mod "spotify/puppetexplorer"
 mod "theforeman/foreman"
 mod "theforeman/foreman_proxy"
 
+mod "saz/resolv_conf"
+
 mod "sjoeboo/foreman_extras",
   :git => "https://github.com/sjoeboo/foreman_extras.git"
 

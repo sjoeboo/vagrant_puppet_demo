@@ -2,8 +2,17 @@
 classes:
   - foreman
   - foreman::plugin::discovery
+  - foreman::plugin::dhcp_browser
+  - foreman::plugin::puppetdb
   - foreman_proxy
   - foreman::cli
+  - foreman::compute::vmware
+  - foreman::compute::gce
+  - foreman::compute::ec2
+  - foreman::compute::libvirt
+  - foreman::compute::openstack
+packages:
+  - centos-release-scl
 ospuppet::agent::package_name: 'puppet'
 ospuppet::puppet_confdir: '/etc/puppet'
 firewall_rules:
@@ -19,10 +28,10 @@ firewall_rules:
     iniface: enp0s9
     action: accept
 foreman::passenger_ruby: '/usr/bin/ruby193-ruby'
-foreman::passenger_ruby_package: 'ruby193-rubygem-passenger-native'
+#foreman::passenger_ruby_package: 'ruby193-rubygem-passenger40-native'
 foreman::admin_username: 'admin'
 foreman::admin_password: 'foreman'
-foreman::plugin_prefix: 'ruby193-rubygem-foreman_'
+#foreman::plugin_prefix: 'ruby193-rubygem-foreman_'
 foreman_proxy::puppetca: false
 foreman_proxy::puppetrun: false
 foreman_proxy::dhcp: true
