@@ -1,1 +1,38 @@
 ---
+classes:
+  - sensu
+  - redis
+  - erlang
+  - rabbitmq
+  - rabbitmq::repo::rhel
+  - uchiwa
+uchiwa::install_repo: false
+uchiwa::host: '192.168.20.6'
+rabbitmq::manage_repos: true
+rabbitmq::repos_ensure: true
+rabbitmq::admin_enable: true
+rabbitmq::interface: 'enp0s8'
+sensu::server: true
+sensu::api: true
+sensu::rabbitmq_password: 'sensu'
+sensu::client_address: '192.168.20.6'
+sensu::client_bind: '192.168.20.6'
+sensu::api_address: '192.168.20.6'
+sensu::api_host: '192.168.20.6'
+sensu::api_bind: '0.0.0.0'
+firewall_rules:
+  '000 allow web':
+    dport:
+      - 80
+      - 443
+      - 8443
+    proto: tcp
+    action: accept
+  '000 allow all':
+    proto: all
+    action: accept
+    iniface: enp0s3
+  '000 allow all2':
+    proto: all
+    action: accept
+    iniface: enp0s8

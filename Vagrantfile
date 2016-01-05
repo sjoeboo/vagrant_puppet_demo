@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
     sensu.vm.network "private_network", ip: "192.168.20.6"
     sensu.vm.provision "shell", inline: <<-SHELL
       echo "192.168.20.5  master.vagrant master" >> /etc/hosts
-      hostname slave01.vagrant
+      hostname sensu.vagrant
       sudo /opt/puppetlabs/bin/puppet agent --test --server=master.vagrant;true
     SHELL
   end
