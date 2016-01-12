@@ -2,6 +2,7 @@ forge "https://forgeapi.puppetlabs.com"
 
 mod 'juame-ospuppet'
 
+mod "puppetlabs/package_updates"
 mod "puppetlabs/puppetdb"
 mod "puppetlabs/apache"
 mod "puppetlabs/vcsrepo"
