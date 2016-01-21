@@ -1,0 +1,12 @@
+---
+classes:
+  - profile::zabbix::server
+firewall_rules:
+  '000 allow zabbix':
+    dport:
+      - 80
+      - 443
+      - 10051
+      - 10050
+    proto: tcp
+    action: accept

@@ -1,25 +1,30 @@
 ---
 classes:
-  - sensu
   - redis
   - erlang
   - rabbitmq
   - rabbitmq::repo::rhel
   - uchiwa
 uchiwa::install_repo: false
-uchiwa::host: '192.168.20.6'
+uchiwa::host: "%{::ipaddress_enp0s8}"
+uchiwa::sensu_api_endpoints:
+  -
+    name: sensu
+    host: "%{::ipaddress_enp0s8}"
 rabbitmq::manage_repos: true
 rabbitmq::repos_ensure: true
 rabbitmq::admin_enable: true
-rabbitmq::interface: 'enp0s8'
+rabbitmq::node_ip_address: "%{::ipaddress_enp0s8}"
 sensu::server: true
 sensu::api: true
 sensu::rabbitmq_password: 'sensu'
-sensu::client_address: '192.168.20.6'
-sensu::client_bind: '192.168.20.6'
-sensu::api_address: '192.168.20.6'
-sensu::api_host: '192.168.20.6'
-sensu::api_bind: '0.0.0.0'
+sensu::rabbitmq_port: 5672
+sensu::rabbitmq_host: "%{::ipaddress_enp0s8}"
+sensu::client_address: "%{::ipaddress_enp0s8}"
+sensu::client_bind: "%{::ipaddress_enp0s8}"
+sensu::api_address: "%{::ipaddress_enp0s8}"
+sensu::api_host: "%{::ipaddress_enp0s8}"
+sensu::api_bind: "%{::ipaddress_enp0s8}"
 firewall_rules:
   '000 allow web':
     dport:
@@ -36,3 +41,25 @@ firewall_rules:
     proto: all
     action: accept
     iniface: enp0s8
+sensu_handlers:
+  default:
+    command: 'cat'
+sensu_checks:
+  check_ssh:
+    command: '/usr/lib64/nagios/plugins/check_ssh localhost'
+    handlers:
+      - debug
+      - default
+    subscribers:
+      - base
+    interval: 60
+    standalone: false
+  check_puppet_tcp:
+    command: '/usr/lib64/nagios/plugins/check_tcp -H localhost -p 8140'
+    handlers:
+      - debug
+      - default
+    subscribers:
+      - puppetservers
+    interval: 1
+    standalone: false

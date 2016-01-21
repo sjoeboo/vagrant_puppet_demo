@@ -4,6 +4,15 @@ classes:
   - firewall
   - ospuppet::agent
   - resolv_conf
+  - package_updates
+  - sensu
+#  - zabbix::agent
+#zabbix::agent::server: 192.168.20.20
+#zabbix::agent::serveractive: 192.168.20.20
+#zabbix::agent::listenip: "%{::ipaddress_enp0s8}"
+#zabbix::agent::sourceip: "%{::ipaddress_enp0s8}"
+#zabbix::agent::manage_resources: true
+#zabbix::listenip: '*'
 ospuppet::agent::server: 'master.vagrant'
 ospuppet::agent::runinterval: '5m'
 ospuppet::agent::custom_settings:
@@ -16,3 +25,19 @@ resolv_conf::nameservers:
   - 8.8.4.4
 resolv_conf::searchpath:
   - vagrant
+sensu::purge:
+  plugins: true
+  config: true
+  handlers: true
+sensu::rabbitmq_host: "192.168.20.6"
+sensu::rabbitmq_password : 'sensu'
+sensu::subscriptions:
+  - 'base'
+packages:
+  - nagios-plugins-ssh
+  - nagios-plugins-ntp
+  - nagios-plugins-load
+  - nagios-plugins-procs
+  - nagios-plugins-tcp
+sensu_plugins:
+  - sensu-plugins-disk-checks

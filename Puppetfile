@@ -2,7 +2,8 @@ forge "https://forgeapi.puppetlabs.com"
 
 mod 'juame-ospuppet'
 
-mod "puppetlabs/package_updates"
+mod "puppetlabs/package_updates",
+  :git => "https://github.com/puppetlabs/puppetlabs-package_updates.git"
 mod "puppetlabs/puppetdb"
 mod "puppetlabs/apache"
 mod "puppetlabs/vcsrepo"
@@ -20,6 +21,7 @@ mod "sensu/sensu"
 
 mod "arioch/redis"
 
+mod "wdijkerman/zabbix"
 
 mod "sjoeboo/foreman_extras",
   :git => "https://github.com/sjoeboo/foreman_extras.git"

@@ -38,4 +38,11 @@ firewall_rules:
       - 443
     proto: tcp
     action: accept
+  '000 allow zabbix':
+    dport:
+      - 10050
+    proto: tcp
+    action: accept
 foreman_extras::foreman_url: 'https://foreman.vagrant'
+sensu::subscriptions:
+  - 'puppetservers'
