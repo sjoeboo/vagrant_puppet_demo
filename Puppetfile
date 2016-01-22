@@ -7,9 +7,8 @@ mod "puppetlabs/package_updates",
 mod "puppetlabs/puppetdb"
 mod "puppetlabs/apache"
 mod "puppetlabs/vcsrepo"
-mod "puppetlabs/rabbitmq"
-mod "garethr/erlang"
-mod "yelp/uchiwa"
+
+
 mod "spotify/puppetexplorer"
 
 mod "theforeman/foreman"
@@ -18,8 +17,10 @@ mod "theforeman/foreman_proxy"
 mod "saz/resolv_conf"
 
 mod "sensu/sensu"
-
 mod "arioch/redis"
+mod "yelp/uchiwa"
+mod "puppetlabs/rabbitmq"
+mod "garethr/erlang"
 
 mod "wdijkerman/zabbix"
 

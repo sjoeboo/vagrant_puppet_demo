@@ -46,3 +46,4 @@ firewall_rules:
 foreman_extras::foreman_url: 'https://foreman.vagrant'
 sensu::subscriptions:
   - 'puppetservers'
+  - 'base'
