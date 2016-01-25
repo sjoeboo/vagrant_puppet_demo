@@ -1,9 +1,7 @@
 ---
 classes:
+  - profile::rabbitmq
   - redis
-  - erlang
-  - rabbitmq
-  - rabbitmq::repo::rhel
   - uchiwa
 uchiwa::install_repo: false
 uchiwa::host: "%{::ipaddress_enp0s8}"
@@ -15,6 +13,19 @@ rabbitmq::manage_repos: true
 rabbitmq::repos_ensure: true
 rabbitmq::admin_enable: true
 rabbitmq::node_ip_address: "%{::ipaddress_enp0s8}"
+rabbitmq_users:
+  'sensu':
+    password: 'sensu'
+    tags:
+      - sensu
+rabbitmq_vhosts:
+  'sensu':
+    ensure: present
+rabbitmq_user_permissions:
+  sensu@sensu:
+    configure_permission: '.*'
+    read_permission: '.*'
+    write_permission: '.*'
 sensu::server: true
 sensu::api: true
 sensu::rabbitmq_password: 'sensu'
